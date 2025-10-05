@@ -104,15 +104,13 @@ def CPA_find_key_byte(bytenum: int) -> int:
 	# Find the key_index/trace_index pair with the best correlation and deduce
 	# that this key hypothesis is the most likely value of secret key byte
 	# #bytenum.
-	key_found = np.argmax(np.max(np.abs(R), axis=1)) # TODO (you can use abs(R).argmax())
+	key_found = np.argmax(np.max(np.abs(R), axis=1))
 
 	# Also return the max correlation for each key hypothesis, so we can plot
 	# it and see how key_found correlates much better than other hypotheses.
 	correlations = [max(abs(R[i,:])) for i in range(len(K))]
 
 	return key_found, correlations
-
-
 
 def color(corr):
 	x = min(corr, 0.25)
@@ -168,10 +166,10 @@ def plot_full_key(keys_found: list[int], correlations: list[list[float]]):
 	plt.savefig(filename, dpi=600)
 	print("Done! Open {} for the plot.".format(filename))
 
-# Basic example: attack a single byte
-#byte_to_attack = 2
-#key_found, correlations = CPA_find_key_byte(byte_to_attack)
-#plot_single_byte(byte_to_attack, key_found, correlations)
+# Basic example:
+# byte_to_attack = 2
+# key_found, correlations = CPA_find_key_byte(byte_to_attack)
+# plot_single_byte(byte_to_attack, key_found, correlations)
 
 # Attack the entire key
 keys_found, correlations = [], []
