@@ -254,14 +254,16 @@ static void KeyExpansion(void)
 // The round key is added to the state by an XOR function.
 static void AddRoundKey(uint8_t round)
 {
-  uint8_t i,j;
-  for (i=0;i<4;++i)
-  {
-    for (j = 0; j < 4; ++j)
+    uint8_t i, j;
+    const uint8_t *roundKeyPtr = &RoundKey[round * Nb * 4];
+    
+    for (i = 0; i < 4; ++i)
     {
-      (*state)[i][j] ^= RoundKey[round * Nb * 4 + i * Nb + j];
+        for (j = 0; j < 4; ++j)
+        {
+            (*state)[i][j] ^= roundKeyPtr[i * Nb + j];
+        }
     }
-  }
 }
 
 // The SubBytes Function Substitutes the values in the
